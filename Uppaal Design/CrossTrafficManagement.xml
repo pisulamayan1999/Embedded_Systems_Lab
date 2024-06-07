@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan assignCar;
+chan nextCar;
+chan collisionCheck;
+chan trafficCheck;
+
+bool collisionFree = true;
+bool trafficFree = true;
+
+</declaration>
+	<template>
+		<name>Car1</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id0" x="0" y="0">
+			<name x="-25" y="-51">Idle</name>
+		</location>
+		<location id="id1" x="200" y="0">
+			<name x="153" y="-59">VehicleQue</name>
+		</location>
+		<location id="id2" x="400" y="0">
+			<name x="382" y="-51">Drive</name>
+		</location>
+		<location id="id3" x="200" y="200">
+			<name x="187" y="221">Wait</name>
+		</location>
+		<init ref="id0"/>
+		<transition id="id4">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="68" y="-25">assignCar!</label>
+		</transition>
+		<transition id="id5">
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-8" y="68">collisionFree == false</label>
+			<label kind="synchronisation" x="51" y="119">collisionCheck?</label>
+		</transition>
+		<transition id="id6">
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="guard" x="289" y="110">trafficFree == true</label>
+			<label kind="synchronisation" x="272" y="136">trafficCheck?</label>
+		</transition>
+		<transition id="id7">
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="212" y="-34">collisionFree == true</label>
+			<label kind="synchronisation" x="221" y="8">collisionCheck?</label>
+		</transition>
+		<transition id="id8">
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="229" y="34">nextCar!</label>
+		</transition>
+	</template>
+	<template>
+		<name>Car2</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id9" x="0" y="0">
+			<name x="-17" y="-51">Idle</name>
+		</location>
+		<location id="id10" x="200" y="0">
+			<name x="161" y="-59">VehicleQue</name>
+		</location>
+		<location id="id11" x="400" y="0">
+			<name x="399" y="-59">Drive</name>
+		</location>
+		<location id="id12" x="200" y="200">
+			<name x="178" y="221">Wait</name>
+		</location>
+		<init ref="id9"/>
+		<transition id="id13">
+			<source ref="id9"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="51" y="8">assignCar!</label>
+		</transition>
+		<transition id="id14">
+			<source ref="id10"/>
+			<target ref="id12"/>
+			<label kind="guard" x="0" y="102">collisionFree == false</label>
+			<label kind="synchronisation" x="51" y="68">collisionCheck?</label>
+		</transition>
+		<transition id="id15">
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="guard" x="306" y="102">trafficFree == true</label>
+			<label kind="synchronisation" x="297" y="127">trafficCheck?</label>
+		</transition>
+		<transition id="id16">
+			<source ref="id10"/>
+			<target ref="id11"/>
+			<label kind="guard" x="195" y="-34">collisionFree == true</label>
+			<label kind="synchronisation" x="212" y="25">collisionCheck?</label>
+		</transition>
+		<transition id="id17">
+			<source ref="id11"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="238" y="8">nextCar!</label>
+		</transition>
+	</template>
+	<template>
+		<name>Car3</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id18" x="0" y="0">
+			<name x="-17" y="-51">Idle</name>
+		</location>
+		<location id="id19" x="200" y="0">
+			<name x="153" y="-59">VehicleQue</name>
+		</location>
+		<location id="id20" x="400" y="0">
+			<name x="382" y="-59">Drive</name>
+		</location>
+		<location id="id21" x="200" y="200">
+			<name x="187" y="221">Wait</name>
+		</location>
+		<init ref="id18"/>
+		<transition id="id22">
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="51" y="8">assignCar!</label>
+		</transition>
+		<transition id="id23">
+			<source ref="id19"/>
+			<target ref="id21"/>
+			<label kind="guard" x="0" y="93">collisionFree == false</label>
+			<label kind="synchronisation" x="59" y="59">collisionCheck?</label>
+		</transition>
+		<transition id="id24">
+			<source ref="id21"/>
+			<target ref="id20"/>
+			<label kind="guard" x="297" y="102">trafficFree == true</label>
+			<label kind="synchronisation" x="289" y="127">trafficCheck?</label>
+		</transition>
+		<transition id="id25">
+			<source ref="id19"/>
+			<target ref="id20"/>
+			<label kind="guard" x="204" y="-34">collisionFree == true</label>
+			<label kind="synchronisation" x="212" y="25">collisionCheck?</label>
+		</transition>
+		<transition id="id26">
+			<source ref="id20"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="238" y="0">nextCar!</label>
+		</transition>
+	</template>
+	<template>
+		<name>Car4</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id27" x="0" y="0">
+			<name x="-17" y="-51">Idle</name>
+		</location>
+		<location id="id28" x="200" y="0">
+			<name x="170" y="-59">VehicleQue</name>
+		</location>
+		<location id="id29" x="400" y="0">
+			<name x="374" y="-59">Drive</name>
+		</location>
+		<location id="id30" x="200" y="200">
+			<name x="178" y="221">Wait</name>
+		</location>
+		<init ref="id27"/>
+		<transition id="id31">
+			<source ref="id27"/>
+			<target ref="id28"/>
+			<label kind="synchronisation" x="42" y="8">assignCar!</label>
+		</transition>
+		<transition id="id32">
+			<source ref="id28"/>
+			<target ref="id30"/>
+			<label kind="guard" x="0" y="102">collisionFree == false</label>
+			<label kind="synchronisation" x="59" y="68">collisionCheck?</label>
+		</transition>
+		<transition id="id33">
+			<source ref="id30"/>
+			<target ref="id29"/>
+			<label kind="guard" x="306" y="93">trafficFree == true</label>
+			<label kind="synchronisation" x="289" y="127">trafficCheck?</label>
+		</transition>
+		<transition id="id34">
+			<source ref="id28"/>
+			<target ref="id29"/>
+			<label kind="guard" x="204" y="-34">collisionFree == true</label>
+			<label kind="synchronisation" x="221" y="25">collisionCheck?</label>
+		</transition>
+		<transition id="id35">
+			<source ref="id29"/>
+			<target ref="id28"/>
+			<label kind="synchronisation" x="246" y="8">nextCar!</label>
+		</transition>
+	</template>
+	<template>
+		<name>InfrastructureController</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id36" x="-127" y="93">
+			<name x="-178" y="59">Idle</name>
+		</location>
+		<location id="id37" x="102" y="93">
+			<name x="119" y="59">STRF</name>
+		</location>
+		<init ref="id36"/>
+		<transition id="id38">
+			<source ref="id36"/>
+			<target ref="id36"/>
+			<label kind="guard" x="-331" y="170">true</label>
+			<nail x="-161" y="212"/>
+			<nail x="-246" y="119"/>
+		</transition>
+		<transition id="id39">
+			<source ref="id37"/>
+			<target ref="id36"/>
+			<label kind="guard" x="-161" y="-68">true</label>
+			<label kind="assignment" x="-110" y="-68">trafficFree = false</label>
+			<nail x="102" y="-42"/>
+			<nail x="-127" y="-42"/>
+		</transition>
+		<transition id="id40">
+			<source ref="id36"/>
+			<target ref="id37"/>
+			<label kind="guard" x="-102" y="144">true</label>
+			<label kind="assignment" x="-93" y="102">collisionFree = true</label>
+		</transition>
+	</template>
+	<system>
+Car1_inst = Car1();
+Car2_inst = Car2();
+Car3_inst = Car3();
+Car4_inst = Car4();
+Infrastructure = InfrastructureController();
+
+system Car1_inst, Car2_inst, Car3_inst, Car4_inst, Infrastructure;
+</system>
+	<queries>
+		<query>
+			<formula/>
+			<comment/>
+		</query>
+	</queries>
+</nta>
