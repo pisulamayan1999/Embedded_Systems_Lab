@@ -1,0 +1,80 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity TrafficController_tb is
+end TrafficController_tb;
+
+architecture Behavioral of TrafficController_tb is
+    signal clk : STD_LOGIC := '0';
+    signal reset : STD_LOGIC := '0';
+    signal request_north : STD_LOGIC := '0';
+    signal request_south : STD_LOGIC := '0';
+    signal request_east : STD_LOGIC := '0';
+    signal request_west : STD_LOGIC := '0';
+    signal allow_north : STD_LOGIC;
+    signal allow_south : STD_LOGIC;
+    signal allow_east : STD_LOGIC;
+    signal allow_west : STD_LOGIC;
+
+    component TrafficController
+        Port (
+            clk : in STD_LOGIC;
+            reset : in STD_LOGIC;
+            request_north : in STD_LOGIC;
+            request_south : in STD_LOGIC;
+            request_east : in STD_LOGIC;
+            request_west : in STD_LOGIC;
+            allow_north : out STD_LOGIC;
+            allow_south : out STD_LOGIC;
+            allow_east : out STD_LOGIC;
+            allow_west : out STD_LOGIC
+        );
+    end component;
+
+begin
+    uut: TrafficController
+        Port map (
+            clk => clk,
+            reset => reset,
+            request_north => request_north,
+            request_south => request_south,
+            request_east => request_east,
+            request_west => request_west,
+            allow_north => allow_north,
+            allow_south => allow_south,
+            allow_east => allow_east,
+            allow_west => allow_west
+        );
+
+    -- Clock generation
+    clk <= not clk after 10 ns;
+
+    -- Stimulus process
+    stim_proc: process
+    begin
+        -- Apply reset
+        reset <= '1';
+        wait for 20 ns;
+        reset <= '0';
+        
+        -- Simulate vehicle requests
+        request_north <= '1';
+        wait for 20 ns;
+        request_north <= '0';
+        
+        request_south <= '1';
+        wait for 20 ns;
+        request_south <= '0';
+        
+        request_east <= '1';
+        wait for 20 ns;
+        request_east <= '0';
+        
+        request_west <= '1';
+        wait for 20 ns;
+        request_west <= '0';
+        
+        wait;
+    end process;
+
+end Behavioral;
