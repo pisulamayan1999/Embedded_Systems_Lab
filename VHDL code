@@ -1,0 +1,94 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity TrafficController is
+    Port (
+        clk : in STD_LOGIC;
+        reset : in STD_LOGIC;
+        request_north : in STD_LOGIC;
+        request_south : in STD_LOGIC;
+        request_east : in STD_LOGIC;
+        request_west : in STD_LOGIC;
+        allow_north : out STD_LOGIC;
+        allow_south : out STD_LOGIC;
+        allow_east : out STD_LOGIC;
+        allow_west : out STD_LOGIC
+    );
+end TrafficController;
+
+architecture Behavioral of TrafficController is
+    type state_type is (IDLE, NORTH, SOUTH, EAST, WEST);
+    signal state : state_type := IDLE;
+    signal next_state : state_type;
+
+begin
+
+    process (clk, reset)
+    begin
+        if reset = '1' then
+            state <= IDLE;
+        elsif rising_edge(clk) then
+            state <= next_state;
+        end if;
+    end process;
+
+    process (state, request_north, request_south, request_east, request_west)
+    begin
+        case state is
+            when IDLE =>
+                allow_north <= '0';
+                allow_south <= '0';
+                allow_east <= '0';
+                allow_west <= '0';
+                if request_north = '1' then
+                    next_state <= NORTH;
+                elsif request_south = '1' then
+                    next_state <= SOUTH;
+                elsif request_east = '1' then
+                    next_state <= EAST;
+                elsif request_west = '1' then
+                    next_state <= WEST;
+                else
+                    next_state <= IDLE;
+                end if;
+                
+            when NORTH =>
+                allow_north <= '1';
+                allow_south <= '0';
+                allow_east <= '0';
+                allow_west <= '0';
+                next_state <= IDLE;
+                
+            when SOUTH =>
+                allow_north <= '0';
+                allow_south <= '1';
+                allow_east <= '0';
+                allow_west <= '0';
+                next_state <= IDLE;
+                
+            when EAST =>
+                allow_north <= '0';
+                allow_south <= '0';
+                allow_east <= '1';
+                allow_west <= '0';
+                next_state <= IDLE;
+                
+            when WEST =>
+                allow_north <= '0';
+                allow_south <= '0';
+                allow_east <= '0';
+                allow_west <= '1';
+                next_state <= IDLE;
+                
+            when others =>
+                allow_north <= '0';
+                allow_south <= '0';
+                allow_east <= '0';
+                allow_west <= '0';
+                next_state <= IDLE;
+        end case;
+    end process;
+
+end Behavioral;
